@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOTIJHEEL ZONE RADIO</title>
+    <title>MOTIJHEEL ZONE RADIO · GLOBAL SEARCH</title>
     <link rel="icon" href="wififavicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -22,6 +22,7 @@
             --text-light: #5a82a6;
             --table-header-bg: #1e6fa8;
             --border: rgba(26,127,203,0.15);
+            --hover-glow: rgba(26,127,203,0.15);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', Arial, sans-serif; }
         body { background: var(--bg-color); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; font-size: 14px; }
@@ -149,7 +150,19 @@
         .client-card.active { border-color: var(--accent); background: linear-gradient(135deg, rgba(26,127,203,0.07), rgba(26,127,203,0.02)); box-shadow: 0 4px 14px rgba(26,127,203,0.12); transform: translateX(2px); }
         .client-card.active::before { background: var(--accent); }
 
-        .client-name { font-size: 12.5px; font-weight: 800; color: var(--text-dark); line-height: 1.35; margin-bottom: 5px; padding-right: 18px; }
+        /* client name hover effect — light blue (#d4eaff) */
+        .client-name {
+            font-size: 12.5px; font-weight: 800; color: var(--text-dark); line-height: 1.35; margin-bottom: 5px; padding-right: 18px;
+            transition: background-color 0.15s ease, color 0.1s ease;
+            border-radius: 4px;
+            display: inline-block;  /* shrink to content */
+            padding: 2px 4px 2px 2px; /* slight padding for better visibility */
+        }
+        .client-card:hover .client-name {
+            background-color: rgba(26,127,203,0.12);  /* light blue tint */
+            color: #0d4b7a;  /* slightly deeper for contrast */
+        }
+
         .client-meta { display: flex; gap: 6px; align-items: center; }
         .client-tag { font-size: 9px; font-family: 'JetBrains Mono', monospace; padding: 2px 6px; border-radius: 4px; font-weight: 600; text-transform: uppercase; }
         .client-tag.p2p { background: rgba(26,127,203,0.1); color: #1a6fa8; border: 1px solid rgba(26,127,203,0.25); }
@@ -178,13 +191,11 @@
         .detail-header h1 { font-size: 19px; font-weight: 700; letter-spacing: 3px; color: #fff; margin-bottom: 2px; }
         .detail-header p { font-size: 11px; opacity: 0.55; text-transform: uppercase; letter-spacing: 2px; font-family: 'JetBrains Mono', monospace; }
 
-        /* Detail body — no scroll, fills remaining height */
         .detail-body {
             flex: 1; display: flex; flex-direction: column;
             padding: 16px 20px 12px; overflow: hidden; min-height: 0;
         }
 
-        /* Welcome state */
         .detail-welcome {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             height: 100%; text-align: center;
@@ -193,7 +204,6 @@
         .detail-welcome-title { font-size: 20px; font-weight: 700; color: rgba(26,63,92,0.35); letter-spacing: 2.5px; margin-bottom: 8px; text-transform: uppercase; }
         .detail-welcome-sub { font-size: 11px; color: rgba(26,63,92,0.25); letter-spacing: 1px; line-height: 2; font-family: 'JetBrains Mono', monospace; }
 
-        /* Detail card — fills panel, no overflow */
         .detail-card {
             background: var(--card-bg);
             border-radius: 12px;
@@ -206,7 +216,6 @@
         }
         @keyframes fadeSlide { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
-        /* Card header */
         .dc-header {
             background: linear-gradient(135deg, #1a3a5c 0%, #1e5080 100%);
             padding: 14px 20px;
@@ -228,7 +237,6 @@
         .dc-link-badge.p2p { background: rgba(77,182,245,0.15); color: #7fc8f5; border: 1px solid rgba(77,182,245,0.35); }
         .dc-link-badge.p2m { background: rgba(26,127,203,0.2); color: #a8d8f5; border: 1px solid rgba(26,127,203,0.4); }
 
-        /* Info table — compact 2-col grid */
         .dc-table {
             flex: 1; display: grid;
             grid-template-columns: 130px 1fr 130px 1fr;
@@ -255,7 +263,6 @@
             border-right: 1px solid rgba(26,127,203,0.07);
         }
         .dc-cell.val:last-child { border-right: none; }
-        /* Wide row spanning all 4 cols */
         .dc-cell.lbl-wide {
             grid-column: span 1;
             background: rgba(26,127,203,0.04);
@@ -318,7 +325,7 @@
     <div class="sidebar-footer">PREPARED BY AHSANUL KABIR</div>
 </aside>
 
-<!-- ====== MIDDLE PANEL: Client List ====== -->
+<!-- ====== MIDDLE PANEL: Client List with GLOBAL SEARCH ====== -->
 <div class="client-panel">
     <div class="client-panel-header">
         <div class="client-panel-bts" id="panel-bts-name">MALEK BTS</div>
@@ -326,7 +333,7 @@
         <div class="client-panel-count" id="panel-count">1 CLIENT</div>
     </div>
     <div class="client-search-wrap">
-        <input class="client-search" type="text" id="clientSearch" placeholder="🔍  Search clients..." oninput="filterClients()">
+        <input class="client-search" type="text" id="clientSearch" placeholder="🔍  Search ALL BTS radios..." oninput="globalSearchClients()">
     </div>
     <div class="client-list" id="clientList"></div>
 </div>
@@ -346,7 +353,6 @@
         <div class="detail-welcome">
             <div class="detail-welcome-icon">📡</div>
             <div class="detail-welcome-title">Select a Client</div>
-            
         </div>
     </div>
     <div class="detail-footer">MZR · MOTIJHEEL ZONE RADIO · LIVE DATA</div>
@@ -404,12 +410,14 @@ const btsData = {
 };
 
 let currentBTS = 'malek';
+let globalSearchActive = false; // when search query spans all BTS
 
 function selectBTS(btn, id) {
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     btn.classList.add('active');
     currentBTS = id;
     document.getElementById('clientSearch').value = '';
+    globalSearchActive = false;
     renderClientPanel(id);
     showWelcome();
 }
@@ -418,32 +426,84 @@ function renderClientPanel(id) {
     const bts = btsData[id];
     document.getElementById('panel-bts-name').textContent = bts.name.toUpperCase();
     document.getElementById('panel-count').textContent = bts.clients.length + ' CLIENT' + (bts.clients.length !== 1 ? 'S' : '');
-    renderCards(bts.clients);
+    renderCards(bts.clients, id); // pass origin id to keep context
 }
 
-function renderCards(clients) {
+function renderCards(clientsArray, originBtsId = currentBTS) {
     const list = document.getElementById('clientList');
-    if (!clients.length) {
+    if (!clientsArray.length) {
         list.innerHTML = `<div class="client-empty"><div class="client-empty-icon">🔍</div><div class="client-empty-text">No clients found</div></div>`;
         return;
     }
-    list.innerHTML = clients.map((c, i) => `
-        <div class="client-card" onclick="selectClient(this, ${i})">
+    list.innerHTML = clientsArray.map((c, i) => {
+        // store original bts id in data attribute for callback
+        return `<div class="client-card" data-bts="${originBtsId}" data-index="${i}" onclick="selectClientGlobal(this, '${originBtsId}', ${i})">
             <div class="client-name">${c.name}</div>
             <div class="client-meta">
                 <span class="client-tag ${c.linktype.toLowerCase()}">${c.linktype}</span>
                 <span class="client-ip">${c.apip}</span>
             </div>
             <span class="client-arrow">›</span>
-        </div>`).join('');
+        </div>`;
+    }).join('');
 }
 
-function filterClients() {
-    const q = document.getElementById('clientSearch').value.toLowerCase();
-    renderCards(btsData[currentBTS].clients.filter(c => c.name.toLowerCase().includes(q)));
+// GLOBAL SEARCH — across all BTS
+function globalSearchClients() {
+    const q = document.getElementById('clientSearch').value.toLowerCase().trim();
+    if (q === '') {
+        globalSearchActive = false;
+        renderClientPanel(currentBTS);
+        return;
+    }
+
+    globalSearchActive = true;
+    // gather all clients from all BTS with bts origin
+    let allMatches = [];
+    for (let [btsId, bts] of Object.entries(btsData)) {
+        bts.clients.forEach(client => {
+            if (client.name.toLowerCase().includes(q)) {
+                allMatches.push({ client, btsId, btsName: bts.name });
+            }
+        });
+    }
+
+    // update header to reflect global search
+    document.getElementById('panel-bts-name').textContent = 'ALL BTS · GLOBAL';
+    document.getElementById('panel-count').textContent = allMatches.length + ' RESULT' + (allMatches.length !== 1 ? 'S' : '');
+
+    // render cards with mixed origins (store btsId in data attr)
+    const list = document.getElementById('clientList');
+    if (!allMatches.length) {
+        list.innerHTML = `<div class="client-empty"><div class="client-empty-icon">🔍</div><div class="client-empty-text">No matches across BTS</div></div>`;
+        return;
+    }
+
+    list.innerHTML = allMatches.map((match, idx) => {
+        return `<div class="client-card" data-bts="${match.btsId}" data-global-idx="${idx}" onclick="selectClientGlobal(this, '${match.btsId}', ${match.btsId === 'malek' ? btsData.malek.clients.indexOf(match.client) : (match.btsId === 'jatrabari' ? btsData.jatrabari.clients.indexOf(match.client) : (match.btsId === 'imamganj' ? btsData.imamganj.clients.indexOf(match.client) : (match.btsId === 'concord' ? btsData.concord.clients.indexOf(match.client) : btsData.joypara.clients.indexOf(match.client))))})">
+            <div class="client-name">${match.client.name}</div>
+            <div class="client-meta">
+                <span class="client-tag ${match.client.linktype.toLowerCase()}">${match.client.linktype}</span>
+                <span class="client-ip">${match.client.apip}</span>
+                <span style="margin-left:auto; font-size:8px; color:var(--accent); background:rgba(26,127,203,0.08); padding:2px 6px; border-radius:12px;">${match.btsName}</span>
+            </div>
+            <span class="client-arrow">›</span>
+        </div>`;
+    }).join('');
 }
+
+function selectClientGlobal(element, btsId, clientIdx) {
+    document.querySelectorAll('.client-card').forEach(c => c.classList.remove('active'));
+    element.classList.add('active');
+
+    const client = btsData[btsId].clients[clientIdx];
+    showDetail(client, btsData[btsId].name);
+}
+
+function filterClients() { /* replaced by globalSearchClients, but keep for fallback */ globalSearchClients(); }
 
 function selectClient(card, idx) {
+    if (globalSearchActive) return; // selection handled by global handler
     document.querySelectorAll('.client-card').forEach(c => c.classList.remove('active'));
     card.classList.add('active');
     const q = document.getElementById('clientSearch').value.toLowerCase();
@@ -456,7 +516,6 @@ function showWelcome() {
         <div class="detail-welcome">
             <div class="detail-welcome-icon">📡</div>
             <div class="detail-welcome-title">Select a Client</div>
-           
         </div>`;
 }
 
@@ -505,6 +564,7 @@ function showDetail(c, btsName) {
         </div>`;
 }
 
+// initial render
 renderClientPanel('malek');
 </script>
 </body>
