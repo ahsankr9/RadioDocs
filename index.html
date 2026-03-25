@@ -150,17 +150,16 @@
         .client-card.active { border-color: var(--accent); background: linear-gradient(135deg, rgba(26,127,203,0.07), rgba(26,127,203,0.02)); box-shadow: 0 4px 14px rgba(26,127,203,0.12); transform: translateX(2px); }
         .client-card.active::before { background: var(--accent); }
 
-        /* client name hover effect — light blue (#d4eaff) */
         .client-name {
             font-size: 12.5px; font-weight: 800; color: var(--text-dark); line-height: 1.35; margin-bottom: 5px; padding-right: 18px;
             transition: background-color 0.15s ease, color 0.1s ease;
             border-radius: 4px;
-            display: inline-block;  /* shrink to content */
-            padding: 2px 4px 2px 2px; /* slight padding for better visibility */
+            display: inline-block;
+            padding: 2px 4px 2px 2px;
         }
         .client-card:hover .client-name {
-            background-color: rgba(26,127,203,0.12);  /* light blue tint */
-            color: #0d4b7a;  /* slightly deeper for contrast */
+            background-color: rgba(26,127,203,0.12);
+            color: #0d4b7a;
         }
 
         .client-meta { display: flex; gap: 6px; align-items: center; }
@@ -310,7 +309,7 @@
             <div class="nav-item-inner"><span class="nav-dot"></span><span>Malek BTS</span><span class="nav-count">1</span></div>
         </button></li>
         <li><button class="nav-item" onclick="selectBTS(this,'jatrabari')">
-            <div class="nav-item-inner"><span class="nav-dot"></span><span>Jatrabari BTS</span><span class="nav-count">8</span></div>
+            <div class="nav-item-inner"><span class="nav-dot"></span><span>Jatrabari BTS</span><span class="nav-count">9</span></div>
         </button></li>
         <li><button class="nav-item" onclick="selectBTS(this,'imamganj')">
             <div class="nav-item-inner"><span class="nav-dot"></span><span>Imamganj BTS</span><span class="nav-count">2</span></div>
@@ -376,7 +375,8 @@ const btsData = {
             { name:"Janata Bank: Gandaria Corp Branch", swip:"Huawei SW:GE0/0/11", apip:"172.16.21.130", cpip:"172.16.21.133", linktype:"P2P", radioname:"PMP Eforce100 Dish", ssid:"6092020", chwidth:"20 MHz", freq:"5760", key:"epmp-keranigonj", vlan:"N/A" },
             { name:"Renata Ltd: Burigonga Depot", swip:"Huawei SW:GE0/0/20", apip:"10.200.140.106", cpip:"10.200.140.107", linktype:"P2M", radioname:"NANO AIRFIBER 5XHD", ssid:"mblabdullahpur", chwidth:"20 MHz", freq:"5730", key:"121224@L3", vlan:"N/A" },
             { name:"United Com. Bank: Dania Branch", swip:"Huawei SW:GE0/0/21", apip:"10.200.140.98", cpip:"10.200.140.100", linktype:"P2M", radioname:"NANO STATION M5", ssid:"icmh567", chwidth:"20 MHz", freq:"5775/5785", key:"N/A", vlan:"600" },
-            { name:"Dutch-Bangla Bank: Matuail Branch", swip:"Huawei SW:GE0/0/23", apip:"172.16.21.98", cpip:"172.16.21.100", linktype:"P2P", radioname:"PMP Eforce100 Dish", ssid:"epmpjatrabari", chwidth:"20 MHz", freq:"5350/5840", key:"epmp.jatrabari", vlan:"N/A" }
+            { name:"Dutch-Bangla Bank: Matuail Branch", swip:"Huawei SW:GE0/0/23", apip:"172.16.21.98", cpip:"172.16.21.100", linktype:"P2P", radioname:"PMP Eforce100 Dish", ssid:"epmpjatrabari", chwidth:"20 MHz", freq:"5350/5840", key:"epmp.jatrabari", vlan:"N/A" },
+            { name:"B.A.R & ASSOCIATES LTD", swip:"Huawei SW:GE0/0/28", apip:"10.200.140.194", cpip:"10.200.140.195", linktype:"P2P", radioname:"ePMP Cambium Eforce300 With Dish", ssid:"BARassociate26", chwidth:"40 MHz", freq:"5350", key:"BAR@link3", vlan:"N/A" }
         ]
     },
     imamganj: {
@@ -410,7 +410,7 @@ const btsData = {
 };
 
 let currentBTS = 'malek';
-let globalSearchActive = false; // when search query spans all BTS
+let globalSearchActive = false;
 
 function selectBTS(btn, id) {
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -426,7 +426,7 @@ function renderClientPanel(id) {
     const bts = btsData[id];
     document.getElementById('panel-bts-name').textContent = bts.name.toUpperCase();
     document.getElementById('panel-count').textContent = bts.clients.length + ' CLIENT' + (bts.clients.length !== 1 ? 'S' : '');
-    renderCards(bts.clients, id); // pass origin id to keep context
+    renderCards(bts.clients, id);
 }
 
 function renderCards(clientsArray, originBtsId = currentBTS) {
@@ -436,7 +436,6 @@ function renderCards(clientsArray, originBtsId = currentBTS) {
         return;
     }
     list.innerHTML = clientsArray.map((c, i) => {
-        // store original bts id in data attribute for callback
         return `<div class="client-card" data-bts="${originBtsId}" data-index="${i}" onclick="selectClientGlobal(this, '${originBtsId}', ${i})">
             <div class="client-name">${c.name}</div>
             <div class="client-meta">
@@ -448,7 +447,6 @@ function renderCards(clientsArray, originBtsId = currentBTS) {
     }).join('');
 }
 
-// GLOBAL SEARCH — across all BTS
 function globalSearchClients() {
     const q = document.getElementById('clientSearch').value.toLowerCase().trim();
     if (q === '') {
@@ -458,7 +456,6 @@ function globalSearchClients() {
     }
 
     globalSearchActive = true;
-    // gather all clients from all BTS with bts origin
     let allMatches = [];
     for (let [btsId, bts] of Object.entries(btsData)) {
         bts.clients.forEach(client => {
@@ -468,11 +465,9 @@ function globalSearchClients() {
         });
     }
 
-    // update header to reflect global search
     document.getElementById('panel-bts-name').textContent = 'ALL BTS · GLOBAL';
     document.getElementById('panel-count').textContent = allMatches.length + ' RESULT' + (allMatches.length !== 1 ? 'S' : '');
 
-    // render cards with mixed origins (store btsId in data attr)
     const list = document.getElementById('clientList');
     if (!allMatches.length) {
         list.innerHTML = `<div class="client-empty"><div class="client-empty-icon">🔍</div><div class="client-empty-text">No matches across BTS</div></div>`;
@@ -480,7 +475,8 @@ function globalSearchClients() {
     }
 
     list.innerHTML = allMatches.map((match, idx) => {
-        return `<div class="client-card" data-bts="${match.btsId}" data-global-idx="${idx}" onclick="selectClientGlobal(this, '${match.btsId}', ${match.btsId === 'malek' ? btsData.malek.clients.indexOf(match.client) : (match.btsId === 'jatrabari' ? btsData.jatrabari.clients.indexOf(match.client) : (match.btsId === 'imamganj' ? btsData.imamganj.clients.indexOf(match.client) : (match.btsId === 'concord' ? btsData.concord.clients.indexOf(match.client) : btsData.joypara.clients.indexOf(match.client))))})">
+        const clientIdx = btsData[match.btsId].clients.indexOf(match.client);
+        return `<div class="client-card" data-bts="${match.btsId}" data-global-idx="${idx}" onclick="selectClientGlobal(this, '${match.btsId}', ${clientIdx})">
             <div class="client-name">${match.client.name}</div>
             <div class="client-meta">
                 <span class="client-tag ${match.client.linktype.toLowerCase()}">${match.client.linktype}</span>
@@ -495,20 +491,8 @@ function globalSearchClients() {
 function selectClientGlobal(element, btsId, clientIdx) {
     document.querySelectorAll('.client-card').forEach(c => c.classList.remove('active'));
     element.classList.add('active');
-
     const client = btsData[btsId].clients[clientIdx];
     showDetail(client, btsData[btsId].name);
-}
-
-function filterClients() { /* replaced by globalSearchClients, but keep for fallback */ globalSearchClients(); }
-
-function selectClient(card, idx) {
-    if (globalSearchActive) return; // selection handled by global handler
-    document.querySelectorAll('.client-card').forEach(c => c.classList.remove('active'));
-    card.classList.add('active');
-    const q = document.getElementById('clientSearch').value.toLowerCase();
-    const list = btsData[currentBTS].clients.filter(c => c.name.toLowerCase().includes(q));
-    showDetail(list[idx], btsData[currentBTS].name);
 }
 
 function showWelcome() {
