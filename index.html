@@ -3,713 +3,571 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOTIJHEEL ZONE RADIO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@700&display=swap" rel="stylesheet">
+    <title>MOTIJHEEL ZONE RADIO · GLOBAL SEARCH</title>
+    <link rel="icon" href="wififavicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* CSS for all styling */
-        body {
-            font-family: 'Trebuchet MS', Trebuchet MS;
-            margin: 0;
-            padding: 0;
-            background-color: #4ddbff; /* Slightly deeper greenish background */
-            color: #333;
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1a6fa8 0%, #2389cc 50%, #3ba3e0 100%);
+            --accent: #1a7fcb;
+            --accent2: #0e6aad;
+            --accent3: #4db6f5;
+            --sidebar-bg: #f0f7ff;
+            --sidebar-width: 240px;
+            --client-panel-width: 300px;
+            --header-height: 70px;
+            --bg-color: #e8f3fc;
+            --card-bg: #ffffff;
+            --text-dark: #1a3a5c;
+            --text-light: #5a82a6;
+            --table-header-bg: #1e6fa8;
+            --border: rgba(26,127,203,0.15);
+            --hover-glow: rgba(26,127,203,0.15);
         }
-        .container {
-            width: 95%;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', Arial, sans-serif; }
+        body { background: var(--bg-color); color: var(--text-dark); display: flex; height: 100vh; overflow: hidden; font-size: 14px; }
+
+        /* ====== LEFT SIDEBAR ====== */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            display: flex; flex-direction: column;
+            height: 100vh; flex-shrink: 0;
+            border-right: 1px solid rgba(26,127,203,0.18);
+            box-shadow: 4px 0 20px rgba(26,127,203,0.1);
         }
-        h1 {
-            text-align: center;
-            color: #1a5330; /* Deep green */
-            border-bottom: 2px solid #5a945a; /* Deeper green border */
-            padding-bottom: 10px;
-            font-family: 'Trebuchet MS', cursive;
-            font-size: 30px;
-            font-weight: bold;
+        .sidebar-brand {
+            height: var(--header-height);
+            display: flex; align-items: center;
+            padding: 0 22px; gap: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            background: var(--primary-gradient);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
         }
-        .search-container {
+        .brand-icon {
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, #1a7fcb, #0e5a9a);
+            border-radius: 8px; display: flex; align-items: center;
+            justify-content: center; font-size: 18px; flex-shrink: 0;
+            box-shadow: 0 0 16px rgba(26,127,203,0.3);
+        }
+        .brand-text { font-size: 17px; font-weight: 700; letter-spacing: 1.8px; color: #ffffff; text-transform: uppercase; line-height: 1.3; }
+        .brand-sub { font-size: 12px; letter-spacing: 2.5px; color: rgba(255,255,255,0.7); text-transform: uppercase; font-weight: 600; }
+
+        .nav-section-label {
+            padding: 20px 22px 8px;
+            font-size: 9px; letter-spacing: 2.5px;
+            color: rgba(26,127,203,0.5); text-transform: uppercase; font-weight: 600;
+        }
+        .nav-menu { list-style: none; padding: 0 12px; }
+        .nav-item {
+            width: 100%; background: none; border: none;
+            text-align: left; cursor: pointer; margin-bottom: 4px;
+            border-radius: 10px; overflow: hidden;
+        }
+        .nav-item-inner {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 14px; border-radius: 10px;
+            color: #4a7a9b; font-size: 16px; font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: color 0.35s ease, background 0.35s ease, padding-left 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease;
+            border: 1px solid transparent;
+        }
+        .nav-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(26,127,203,0.25); flex-shrink: 0;
+            transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .nav-count { display: none; }
+        .nav-item:hover .nav-item-inner { color: var(--accent); background: rgba(26,127,203,0.08); padding-left: 20px; border-color: rgba(26,127,203,0.2); }
+        .nav-item:hover .nav-dot { background: var(--accent); box-shadow: 0 0 8px rgba(26,127,203,0.5); transform: scale(1.3); }
+        .nav-item.active .nav-item-inner {
+            color: #1a3a5c; background: linear-gradient(135deg, rgba(26,127,203,0.12), rgba(26,127,203,0.04));
+            border-color: rgba(26,127,203,0.3); padding-left: 20px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 4px 12px rgba(26,127,203,0.1);
+        }
+        .nav-item.active .nav-dot { background: var(--accent); box-shadow: 0 0 10px rgba(26,127,203,0.6); transform: scale(1.4); }
+        .nav-item.active .nav-count { background: rgba(26,127,203,0.15); border-color: rgba(26,127,203,0.4); }
+
+        .sidebar-footer { margin-top: auto; padding: 14px 22px; border-top: 1px solid rgba(26,127,203,0.15); font-size: 9px; color: rgba(26,127,203,0.4); letter-spacing: 1.5px; font-family: 'JetBrains Mono', monospace; }
+
+        /* ====== CLIENT PANEL (middle) ====== */
+        .client-panel {
+            width: var(--client-panel-width);
+            background: #f7fbff;
+            display: flex; flex-direction: column;
+            height: 100vh; flex-shrink: 0;
+            border-right: 1px solid var(--border);
+            box-shadow: 4px 0 16px rgba(26,127,203,0.06);
+        }
+        .client-panel-header {
+            height: var(--header-height);
+            background: var(--primary-gradient);
+            display: flex; flex-direction: column;
+            justify-content: center; padding: 0 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        .client-panel-bts { font-size: 12px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 2.5px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+        .client-panel-title { font-size: 17px; font-weight: 700; color: #fff; letter-spacing: 0.5px; margin-top: 1px; }
+        .client-panel-count { font-size: 10px; color: rgba(255,255,255,0.45); font-family: 'JetBrains Mono', monospace; margin-top: 1px; }
+
+        .client-search-wrap { padding: 10px 10px 8px; border-bottom: 1px solid var(--border); background: #fff; }
+        .client-search {
+            width: 100%; background: var(--sidebar-bg);
+            border: 1px solid rgba(26,127,203,0.2); border-radius: 8px;
+            padding: 7px 12px; font-size: 12px; color: var(--text-dark);
+            outline: none; transition: all 0.2s;
+            font-family: 'Rajdhani', sans-serif; font-weight: 600;
+        }
+        .client-search::placeholder { color: rgba(26,127,203,0.35); }
+        .client-search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(26,127,203,0.1); background: #fff; }
+
+        .client-list { flex: 1; overflow-y: auto; padding: 8px; }
+        .client-list::-webkit-scrollbar { width: 4px; }
+        .client-list::-webkit-scrollbar-track { background: transparent; }
+        .client-list::-webkit-scrollbar-thumb { background: rgba(26,127,203,0.2); border-radius: 4px; }
+        .client-list::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        .client-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: rgba(26,127,203,0.3); text-align: center; padding: 24px; }
+        .client-empty-icon { font-size: 36px; margin-bottom: 10px; opacity: 0.35; }
+        .client-empty-text { font-size: 11px; letter-spacing: 1px; line-height: 1.7; }
+
+        .client-card {
+            background: #fff; border: 1px solid rgba(26,127,203,0.1);
+            border-radius: 8px; padding: 10px 12px 10px 14px;
+            margin-bottom: 5px; cursor: pointer;
+            transition: all 0.22s ease;
+            position: relative;
+        }
+        .client-card::before {
+            content: ''; position: absolute; left: 0; top: 4px; bottom: 4px;
+            width: 3px; background: transparent; border-radius: 0 2px 2px 0;
+            transition: all 0.22s ease;
+        }
+        .client-card:hover { border-color: rgba(26,127,203,0.3); transform: translateX(2px); box-shadow: 0 3px 10px rgba(26,127,203,0.08); }
+        .client-card:hover::before { background: var(--accent); }
+        .client-card.active { border-color: var(--accent); background: linear-gradient(135deg, rgba(26,127,203,0.07), rgba(26,127,203,0.02)); box-shadow: 0 4px 14px rgba(26,127,203,0.12); transform: translateX(2px); }
+        .client-card.active::before { background: var(--accent); }
+
+        /* client name hover effect — light blue (#d4eaff) */
+        .client-name {
+            font-size: 12.5px; font-weight: 800; color: var(--text-dark); line-height: 1.35; margin-bottom: 5px; padding-right: 18px;
+            transition: background-color 0.15s ease, color 0.1s ease;
+            border-radius: 4px;
+            display: inline-block;  /* shrink to content */
+            padding: 2px 4px 2px 2px; /* slight padding for better visibility */
+        }
+        .client-card:hover .client-name {
+            background-color: rgba(26,127,203,0.12);  /* light blue tint */
+            color: #0d4b7a;  /* slightly deeper for contrast */
+        }
+
+        .client-meta { display: flex; gap: 6px; align-items: center; }
+        .client-tag { font-size: 9px; font-family: 'JetBrains Mono', monospace; padding: 2px 6px; border-radius: 4px; font-weight: 600; text-transform: uppercase; }
+        .client-tag.p2p { background: rgba(26,127,203,0.1); color: #1a6fa8; border: 1px solid rgba(26,127,203,0.25); }
+        .client-tag.p2m { background: rgba(14,106,173,0.08); color: #0e5a9a; border: 1px solid rgba(14,106,173,0.2); }
+        .client-ip { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: rgba(26,127,203,0.45); }
+        .client-arrow { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: rgba(26,127,203,0.25); font-size: 16px; transition: all 0.2s; }
+        .client-card:hover .client-arrow, .client-card.active .client-arrow { color: var(--accent); }
+
+        /* ====== DETAIL PANEL (right) ====== */
+        .detail-panel {
+            flex: 1; display: flex; flex-direction: column;
+            height: 100vh; overflow: hidden; background: var(--bg-color);
+            min-width: 0;
+        }
+        .detail-header {
+            height: var(--header-height);
+            background: var(--primary-gradient);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 28px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+        }
+        .detail-header-left { display: flex; align-items: center; gap: 14px; }
+        .header-pulse { width: 9px; height: 9px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.8); animation: pulse-ring 2s infinite; }
+        @keyframes pulse-ring { 0%{box-shadow:0 0 0 0 rgba(255,255,255,0.7)} 70%{box-shadow:0 0 0 8px rgba(255,255,255,0)} 100%{box-shadow:0 0 0 0 rgba(255,255,255,0)} }
+        .detail-header h1 { font-size: 19px; font-weight: 700; letter-spacing: 3px; color: #fff; margin-bottom: 2px; }
+        .detail-header p { font-size: 11px; opacity: 0.55; text-transform: uppercase; letter-spacing: 2px; font-family: 'JetBrains Mono', monospace; }
+
+        .detail-body {
+            flex: 1; display: flex; flex-direction: column;
+            padding: 16px 20px 12px; overflow: hidden; min-height: 0;
+        }
+
+        .detail-welcome {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100%; text-align: center;
+        }
+        .detail-welcome-icon { font-size: 56px; opacity: 0.18; margin-bottom: 16px; }
+        .detail-welcome-title { font-size: 20px; font-weight: 700; color: rgba(26,63,92,0.35); letter-spacing: 2.5px; margin-bottom: 8px; text-transform: uppercase; }
+        .detail-welcome-sub { font-size: 11px; color: rgba(26,63,92,0.25); letter-spacing: 1px; line-height: 2; font-family: 'JetBrains Mono', monospace; }
+
+        .detail-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            animation: fadeSlide 0.32s cubic-bezier(0.34,1.1,0.64,1);
+            box-shadow: 0 6px 28px rgba(26,127,203,0.09);
+            display: flex; flex-direction: column;
+            flex: 1; min-height: 0;
+        }
+        @keyframes fadeSlide { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+        .dc-header {
+            background: linear-gradient(135deg, #1a3a5c 0%, #1e5080 100%);
+            padding: 14px 20px;
+            display: flex; align-items: flex-start; justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .dc-client-name { font-size: 23px; font-weight: 700; color: #fff; letter-spacing: 0.3px; line-height: 1.3; }
+        .dc-bts-label {
+            font-size: 12px; color: rgba(77,182,245,0.75); text-transform: uppercase;
+            letter-spacing: 2px; font-family: 'JetBrains Mono', monospace;
+            margin-top: 5px; display: flex; align-items: center; gap: 5px;
+        }
+        .dc-bts-label::before { content: '📡'; font-size: 12px; }
+        .dc-link-badge {
+            padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700;
+            letter-spacing: 1.5px; font-family: 'JetBrains Mono', monospace;
+            flex-shrink: 0; margin-left: 12px; margin-top: 2px;
+        }
+        .dc-link-badge.p2p { background: rgba(77,182,245,0.15); color: #7fc8f5; border: 1px solid rgba(77,182,245,0.35); }
+        .dc-link-badge.p2m { background: rgba(26,127,203,0.2); color: #a8d8f5; border: 1px solid rgba(26,127,203,0.4); }
+
+        .dc-table {
+            flex: 1; display: grid;
+            grid-template-columns: 130px 1fr 130px 1fr;
+            align-content: start;
+            border-top: 1px solid rgba(26,127,203,0.1);
+            overflow: hidden;
+        }
+        .dc-cell {
+            padding: 10px 16px;
+            border-bottom: 1px solid rgba(26,127,203,0.07);
+            display: flex; align-items: center;
+            font-size: 13px;
+        }
+        .dc-cell.lbl {
+            background: rgba(26,127,203,0.04);
+            font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
+            text-transform: uppercase; color: rgba(26,127,203,0.65);
+            font-family: 'JetBrains Mono', monospace;
+            border-right: 1px solid rgba(26,127,203,0.07);
+        }
+        .dc-cell.val {
+            font-family: 'JetBrains Mono', monospace; font-weight: 600;
+            color: #1a3a5c; font-size: 13.5px;
+            border-right: 1px solid rgba(26,127,203,0.07);
+        }
+        .dc-cell.val:last-child { border-right: none; }
+        .dc-cell.lbl-wide {
+            grid-column: span 1;
+            background: rgba(26,127,203,0.04);
+            font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; color: rgba(26,127,203,0.65);
+            font-family: 'JetBrains Mono', monospace;
+            border-right: 1px solid rgba(26,127,203,0.07);
+        }
+        .dc-cell.val-wide {
+            grid-column: span 3;
+            font-family: 'JetBrains Mono', monospace; font-weight: 600;
+            color: #1a3a5c; font-size: 13.5px;
+        }
+
+        .ip-val { color: #0a4a82; font-weight: 700; }
+        .na-val { color: rgba(26,127,203,0.3); font-style: italic; font-weight: 400; }
+        .vlan-chip {
+            background: linear-gradient(135deg, rgba(26,127,203,0.12), rgba(26,127,203,0.05));
+            border: 1px solid rgba(26,127,203,0.25); border-radius: 5px;
+            padding: 2px 8px; font-size: 11px; font-weight: 700; color: var(--accent);
+        }
+
+        .detail-footer {
+            padding: 8px 20px; flex-shrink: 0;
+            font-size: 9px; color: rgba(26,127,203,0.3); font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace;
             text-align: right;
-            margin-bottom: 20px;
-        }
-        .search-container input[type="text"] {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 250px;
-            font-family: 'Trebuchet MS', sans-serif; /* Applied Trebuchet MS here */
-        }
-        .search-container button {
-            padding: 8px 12px;
-            background-color: #1a5330;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .search-container button:hover {
-            background-color: #2e8b57;
-        }
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            border-bottom: 2px solid #5a945a;
-            margin-bottom: 14px;
-        }
-        .tab-link {
-            padding: 10px 14px;
-            cursor: pointer;
-            background-color: #a2d2a2; /* Light greenish tab background */
-            border: 1px solid #5a945a;
-            border-bottom: none;
-            border-radius: 5px 5px 0 0;
-            margin-right: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s ease, color 0.3s ease; /* Added transition */
-        }
-        .tab-link:hover {
-            background-color: #8bb88b;
-        }
-        .tab-link.active {
-            background-color: #1a5330; /* Darker green for active tab */
-            color: white;
-            border-color: #1a5330;
-        }
-        .tab-content {
-            display: none;
-            padding: 14px;
-            border: 1px solid #5a945a;
-            background-color: #f0fff0; /* Lighter greenish inside tab content */
-            border-radius: 0 5px 5px 5px;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        .table-container {
-            overflow-x: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: center;
-            word-wrap: break-word;
-            font-size: 12px;
-        }
-        th {
-            background-color: #c0e0c0; /* Deeper background for table headers */
-        }
-        tr:nth-child(even) {
-            background-color: #f7fcf7;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>MOTIJHEEL ZONE RADIO</h1>
-	<div class="signature"><b>Prepared By AHSANUL KABIR</b></div>    
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search by Client Name...">
-        <button onclick="searchTable()">Search</button>
+<!-- ====== LEFT SIDEBAR: BTS List ====== -->
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">📡</div>
+        <div>
+            <div class="brand-text">Motijheel Zone</div>
+            <div class="brand-sub">Radio Dashboard</div>
+        </div>
     </div>
+    <div class="nav-section-label">BTS Stations</div>
+    <ul class="nav-menu">
+        <li><button class="nav-item active" onclick="selectBTS(this,'malek')">
+            <div class="nav-item-inner"><span class="nav-dot"></span><span>Malek BTS</span><span class="nav-count">1</span></div>
+        </button></li>
+        <li><button class="nav-item" onclick="selectBTS(this,'jatrabari')">
+            <div class="nav-item-inner"><span class="nav-dot"></span><span>Jatrabari BTS</span><span class="nav-count">8</span></div>
+        </button></li>
+        <li><button class="nav-item" onclick="selectBTS(this,'imamganj')">
+            <div class="nav-item-inner"><span class="nav-dot"></span><span>Imamganj BTS</span><span class="nav-count">2</span></div>
+        </button></li>
+        <li><button class="nav-item" onclick="selectBTS(this,'concord')">
+            <div class="nav-item-inner"><span class="nav-dot"></span><span>Concord BTS</span><span class="nav-count">4</span></div>
+        </button></li>
+        <li><button class="nav-item" onclick="selectBTS(this,'joypara')">
+            <div class="nav-item-inner"><span class="nav-dot"></span><span>Joypara BTS</span><span class="nav-count">7</span></div>
+        </button></li>
+    </ul>
+    <div class="sidebar-footer">PREPARED BY AHSANUL KABIR</div>
+</aside>
 
-    <div class="tabs">
-        <div class="tab-link active" onclick="openTab(event, 'malek-bts')">Malek BTS</div>
-        <div class="tab-link" onclick="openTab(event, 'jatrabari-bts')">Jatrabari BTS</div>
-        <div class="tab-link" onclick="openTab(event, 'imamganj-bts')">Imamganj BTS</div>
-        <div class="tab-link" onclick="openTab(event, 'concord-bts')">Concord BTS</div>
-        <div class="tab-link" onclick="openTab(event, 'joypara-bts')">Joypara BTS</div>
+<!-- ====== MIDDLE PANEL: Client List with GLOBAL SEARCH ====== -->
+<div class="client-panel">
+    <div class="client-panel-header">
+        <div class="client-panel-bts" id="panel-bts-name">MALEK BTS</div>
+        <div class="client-panel-title">Clients</div>
+        <div class="client-panel-count" id="panel-count">1 CLIENT</div>
     </div>
+    <div class="client-search-wrap">
+        <input class="client-search" type="text" id="clientSearch" placeholder="🔍  Search ALL BTS radios..." oninput="globalSearchClients()">
+    </div>
+    <div class="client-list" id="clientList"></div>
+</div>
 
-    <div id="malek-bts" class="tab-content active">
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Client Code</th>
-                        <th>Client Name</th>
-                        <th>BTS Name</th>
-                        <th>SW IP & Port</th>
-                        <th>Radio IP (AP)</th>
-                        <th>Radio IP (CP)</th>
-                        <th>Link Type</th>
-                        <th>Radio Name</th>
-                        <th>SSID</th>
-                        <th>Channel width</th>
-                        <th>Frequency</th>
-                        <th>Preshared Key</th>
-                        <th>Mngmt VLAN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="searchable-row">
-                        <td>00088:137</td>
-                        <td>IFIC Bank Limited: DC- 3rd Link</td>
-                        <td>Malek BTS</td>
-                        <td>123.200.15.3 -- 26</td>
-                        <td>10.200.149.114</td>
-                        <td>10.200.149.115</td>
-                        <td>P2P</td>
-                        <td>NANO POWER BEAM-M5-400</td>
-                        <td>1092018</td>
-                        <td>20 MHz</td>
-                        <td>5805/5850</td>
-                        <td>N/A</td>
-                        <td>N/A</td>
-                    </tr>
-                </tbody>
-            </table>
+<!-- ====== RIGHT PANEL: Client Details ====== -->
+<div class="detail-panel">
+    <div class="detail-header">
+        <div class="detail-header-left">
+            <div class="header-pulse"></div>
+            <div>
+                <h1>MOTIJHEEL ZONE RADIO</h1>
+                <p>Live Data · Wireless Link Management</p>
+            </div>
         </div>
     </div>
-    
-    <div id="jatrabari-bts" class="tab-content">
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Client Code</th>
-                        <th>Client Name</th>
-                        <th>BTS Name</th>
-                        <th>S/W IP & Port</th>
-                        <th>Radio IP (AP)</th>
-                        <th>Radio IP (CP)</th>
-                        <th>Link Type</th>
-                        <th>Radio Name</th>
-                        <th>SSID</th>
-                        <th>Channel width</th>
-                        <th>Frequency</th>
-                        <th>Preshared Key</th>
-                        <th>Mngmt VLAN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="searchable-row">
-                        <td>38284:6</td>
-                        <td>Department of Immigration & Passport: Regional Passport Office RPO Jatrabari 4004</td>
-                        <td>Jatrabari BTS</td>
-                        <td>Huawei SW -- GE0/0/2</td>
-                        <td>10.200.140.42</td>
-                        <td>10.200.140.43</td>
-                        <td>P2P</td>
-                        <td>NANO POWER BEAM-M5-400</td>
-                        <td>10122017</td>
-                        <td>10 MHz</td>
-                        <td>5825/5365</td>
-                        <td>N/A</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>11463:7</td>
-                        <td>Midland Bank Ltd:MDBL:Aganagar</td>
-                        <td>Jatrabari BTS</td>
-                        <td>Huawei SW-- GE0/0/22</td>
-                        <td>172.16.17.50</td>
-                        <td>172.16.17.51</td>
-                        <td>P2M</td>
-                        <td>NANO POWER BEAM-M5-400</td>
-                        <td>midland</td>
-                        <td>25 MHz</td>
-                        <td>5870/55860</td>
-                        <td>midland123</td>
-                        <td>15111</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>11157:37</td>
-                        <td>Mutual Trust Bank Ltd: Aganagar Branch, Keranigonj</td>
-                        <td>Jatrabari BTS</td>
-                        <td>Huawei SW-- GE0/0/22</td>
-                        <td>172.16.17.50</td>
-                        <td>172.16.17.53</td>
-			<td>P2M</td>
-                        <td>NANO POWER BEAM-M5-300</td>
-                        <td>midland</td>
-                        <td>25 MHz</td>
-                        <td>5870/55860</td>
-                        <td>midland123</td>
-                        <td>15100</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>00079:11</td>
-                        <td>AB Bank Ltd: Jinjira Branch.</td>
-                        <td>Jatrabari BTS</td>
-                        <td>Huawei SW-- GE0/0/22</td>
-                        <td>172.16.17.50</td>
-                        <td>172.16.17.52</td>
-                        <td>P2M</td>
-                        <td>NANO POWER BEAM-M5-400</td>
-                        <td>midland</td>
-                        <td>25 MHz</td>
-                        <td>5870/55860</td>
-                        <td>midland123</td>
-                        <td>15100</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>00019:111</td>
-                        <td>Janata Bank Limited:Gandaria Corp Branch</td>
-                        <td>Jatrabari BTS</td>
-                        <td>Huawei SW-- GE0/0/11</td>
-                        <td>172.16.21.130</td>
-                        <td>172.16.21.133</td>
-                        <td>P2Me</td>
-                        <td>PMP Cambium Eforce100 With Dish</td>
-                        <td>6092020</td>
-                        <td>20 MHz</td>
-                        <td>5760</td>
-                        <td>epmp-keranigonj</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>00578:133</td>
-                        <td>BRAC Bank Limited:City Group Apon Shomoy Gandaria Branch [ATM]</td>
-                        <td>Jatrabari BTS</td>
-                        <td>Huawei SW-- GE0/0/11</td>
-                        <td>172.16.21.130</td>
-                        <td>172.16.21.134</td>
-                        <td>P2Me</td>
-                        <td>PMP Cambium Eforce100 With Dish</td>
-                        <td>6092020</td>
-                        <td>20 MHz</td>
-                        <td>5760</td>
-                        <td>epmp-keranigonj</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>03786:14</td>
-                        <td>Renata Ltd: Burigonga Depot.</td>
-                        <td>Jatrabari BTS</td>
-                        <td>Huawei SW-- GE0/0/20</td>
-                        <td>10.200.140.106</td>
-                        <td>10.200.140.107</td>
-                        <td>P2M</td>
-                        <td>NANO AIRFIBER 5XHD</td>
-                        <td>mblabdullahpur</td>
-                        <td>20 MHz</td>
-                        <td>5730</td>
-                        <td>121224@L3</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>00676:32</td>
-                        <td>United Commercial Bank Limited: Dania Branch</td>
-                        <td>Jatrabari BTS</td>
-                        <td>Huawei SW -- GE0/0/21</td>
-                        <td>10.200.140.98</td>
-                        <td>10.200.140.100</td>
-                        <td>P2M</td>
-                        <td>NANO STATION M5</td>
-                        <td>icmh567</td>
-                        <td>20 MHz</td>
-                        <td>5775/5785</td>
-                        <td>N/A</td>
-                        <td>600</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>00413:791</td>
-                        <td>Dutch-Bangla Bank Limited:Matuail Branch</td>
-                        <td>Jatrabari BTS</td>
-                        <td>Huawei SW -- GE0/0/23</td>
-                        <td>172.16.21.98</td>
-                        <td>172.16.21.100</td>
-                        <td>P2P</td>
-                        <td>PMP Cambium Eforce100 With Dish</td>
-                        <td>epmpjatrabari</td>
-                        <td>20 MHz</td>
-                        <td>5350/ 5840</td>
-                        <td>epmp.jatrabari</td>
-                        <td>N/A</td>
-                    </tr>
-		    		<tr class="searchable-row">
-                        <td>470302:1</td>
-                        <td>B.A.R & ASSOCIATES LTD</td>
-                        <td>Jatrabari BTS</td>
-                        <td>Huawei SW-- GE0/0/28</td>
-                        <td>10.200.140.194</td>
-                        <td>10.200.140.195</td>
-						<td>P2P</td>
-                        <td>ePMP Cambium Eforce300 With Dish</td>
-                        <td>BARassociate26</td>
-                        <td>40 MHz</td>
-                        <td>5350</td>
-                        <td>BAR@link3</td>
-                        <td>N/A</td>
-                    </tr>
-				</tbody>
-            </table>
+    <div class="detail-body" id="detailBody">
+        <div class="detail-welcome">
+            <div class="detail-welcome-icon">📡</div>
+            <div class="detail-welcome-title">Select a Client</div>
         </div>
     </div>
-    
-    <div id="imamganj-bts" class="tab-content">
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Client Code</th>
-                        <th>Client Name</th>
-                        <th>BTS Name</th>
-                        <th>S/W IP & Port</th>
-                        <th>Radio IP (AP)</th>
-                        <th>Radio IP (CP)</th>
-                        <th>Link Type</th>
-                        <th>Radio Name</th>
-                        <th>SSID</th>
-                        <th>Channel width</th>
-                        <th>Frequency</th>
-                        <th>Preshared Key</th>
-                        <th>Mngmt VLAN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="searchable-row">
-                        <td>00085:16</td>
-                        <td>Shahjalal Islamic Bank: Keranigonj Branch</td>
-                        <td>Imamganj BTS</td>
-                        <td>10.66.61.2 -- 12</td>
-                        <td>172.16.9.146</td>
-                        <td>172.16.9.149</td>
-                        <td>P2M</td>
-                        <td>NANO POWER BEAM-M5-400</td>
-                        <td>imam</td>
-                        <td>20 MHz</td>
-                        <td>5120/5350</td>
-                        <td>N/A</td>
-                        <td>1010</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>00413:415</td>
-                        <td>DBBL:Rajabari Bazar FT, ID: F0547</td>
-                        <td>Imamganj BTS</td>
-                        <td>10.66.61.2 -- 12</td>
-                        <td>172.16.9.146</td>
-                        <td>172.16.9.154</td>
-                        <td>P2M</td>
-                        <td>NANO POWER BEAM-M5-400</td>
-                        <td>imam</td>
-                        <td>20 MHz</td>
-                        <td>5350/5360</td>
-                        <td>N/A</td>
-                        <td>1013</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    
-    <div id="concord-bts" class="tab-content">
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Client Code</th>
-                        <th>Client Name</th>
-                        <th>BTS Name</th>
-                        <th>S/W IP & Port</th>
-                        <th>Radio IP (AP)</th>
-                        <th>Radio IP (CP)</th>
-                        <th>Link Type</th>
-                        <th>Radio Name</th>
-                        <th>SSID</th>
-                        <th>Channel width</th>
-                        <th>Frequency</th>
-                        <th>Preshared Key</th>
-                        <th>Mngmt VLAN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="searchable-row">
-                        <td>1437988:1</td>
-                        <td>Diamond Disposable and Plastic Industries Ltd</td>
-                        <td>Concord BTS</td>
-                        <td>10.67.3.4 -- 33</td>
-                        <td>10.200.144.218</td>
-                        <td>10.200.144.219</td>
-                        <td>P2P</td>
-                        <td>PMP Cambium Eforce100 With Dish</td>
-                        <td>3112022</td>
-                        <td>20 MHz</td>
-                        <td>5340/5355</td>
-                        <td>diamond12345</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>1541917:8</td>
-                        <td>PRAN DAIRY LTD: PRAN-DIST-KERANIGONJ</td>
-                        <td>Concord BTS</td>
-                        <td>10.67.3.3 -- 15</td>
-                        <td>10.200.155.154</td>
-                        <td>10.200.155.155</td>
-                        <td>P2P</td>
-                        <td>PMP Cambium Eforce100 With Dish</td>
-                        <td>5072022</td>
-                        <td>20 MHz</td>
-                        <td>5215/5785</td>
-                        <td>pran12345</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>1737587:1</td>
-                        <td>Directorate of Pre-Paid Metering System BPDB: Bidyut Bhaban_Dhaka_Main Link</td>
-                        <td>Concord BTS</td>
-                        <td>10.67.3.4 -- 41</td>
-                        <td>10.200.144.154</td>
-                        <td>10.200.144.155</td>
-                        <td>P2P</td>
-                        <td>PMP Cambium Eforce100 With Dish</td>
-                        <td>link321</td>
-                        <td>20 MHz</td>
-                        <td>5350/5370</td>
-                        <td>tssa012419</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>1826763:9</td>
-                        <td>Vitalac Dairy & Food Industries Ltd: Secondary</td>
-                        <td>Concord BTS</td>
-                        <td>10.67.3.3 -- 4</td>
-                        <td>10.200.125.202</td>
-                        <td>10.200.125.203</td>
-                        <td>P2P</td>
-                        <td>PowerBeam M5 620</td>
-                        <td>vitalic</td>
-                        <td>20 MHz</td>
-                        <td>5250/537</td>
-                        <td>vitalic123</td>
-                        <td>N/A</td>
-                    </tr>
-		    <tr class="searchable-row">
-                        <td>01196:31</td>
-                        <td>United-Finance-HO-Sec-Radio</td>
-                        <td>Concord BTS</td>
-                        <td>10.67.3.4 -- 45</td>
-                        <td>10.200.144.106</td>
-                        <td>10.200.144.107</td>
-                        <td>P2P</td>
-                        <td>ePMP Cambium Eforce300</td>
-                        <td>UFL_HO_Secondary_Radio</td>
-                        <td>20 MHz</td>
-                        <td>5730/5750</td>
-                        <td>UFL@link321</td>
-                        <td>N/A</td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-    
-    
-    <div id="joypara-bts" class="tab-content">
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Client Code</th>
-                        <th>Client Name</th>
-                        <th>BTS Name</th>
-                        <th>S/W IP & Port</th>
-                        <th>Radio IP (AP)</th>
-                        <th>Radio IP (CP)</th>
-                        <th>Link Type</th>
-                        <th>Radio Name</th>
-                        <th>SSID</th>
-                        <th>Channel width</th>
-                        <th>Frequency</th>
-                        <th>Preshared Key</th>
-                        <th>Mngmt VLAN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="searchable-row">
-                        <td>2120:55:00</td>
-                        <td>Agrani Bank Limited:ABL:Kolapara Branch</td>
-                        <td>Joypara BTS</td>
-                        <td>10.67.1.202 -- 0/4</td>
-                        <td>10.200.134.74</td>
-                        <td>10.200.134.75</td>
-                        <td>P2P</td>
-                        <td>PowerBeam M5 400</td>
-                        <td>ABL</td>
-                        <td>10 Mhz</td>
-                        <td>5500/5800 MHz</td>
-                        <td>ABL</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>15506:04:00</td>
-                        <td>Bangladesh Krishi Bank, Head Office:Hashara Branch</td>
-                        <td>Joypara BTS</td>
-                        <td>10.59.1.30 -- 0/11</td>
-                        <td>10.200.133.146</td>
-                        <td>10.200.133.147</td>
-                        <td>P2P</td>
-                        <td>Rocket 5AC Lite</td>
-                        <td>BKB / hasara07112022</td>
-                        <td>10 Mhz</td>
-                        <td>5340/5345 MHz</td>
-                        <td>hasara07112022</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>87:05:00</td>
-                        <td>Shahjalal Islamic Bank:Nimtola [Shikarpur] Branch</td>
-                        <td>Concord BTS</td>
-                        <td>10.67.3.4 -- 0/10</td>
-                        <td>10.200.143.226</td>
-                        <td>10.200.143.229</td>
-                        <td>P2M</td>
-                        <td>PowerBeam M5 400</td>
-                        <td>PBLNIM / pblnim@321</td>
-                        <td>20 Mhz</td>
-                        <td>5350/5370 MHz</td>
-                        <td>PBLNIM / pblnim@321</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>846:11:00</td>
-                        <td>National Bank Limited:Bhaghyakul Branch</td>
-                        <td>Joypara BTS</td>
-                        <td>10.67.1.202 -- 0/41</td>
-                        <td>10.200.226.34</td>
-                        <td>10.200.226.35</td>
-                        <td>P2P</td>
-                        <td>Rocket 5AC Lite</td>
-                        <td>21102024 / 21102024</td>
-                        <td>20 Mhz</td>
-                        <td>5330/5350 MHz</td>
-                        <td>21102024 / 21102024</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>846:17:00</td>
-                        <td>National Bank Limited:NBL:Baghrabazar Branch</td>
-                        <td>Joypara BTS</td>
-                        <td>10.67.1.202 -- 0/21</td>
-                        <td>10.200.133.226</td>
-                        <td>10.200.133.227</td>
-                        <td>P2P</td>
-                        <td>PowerBeam M5 400</td>
-                        <td>ABC</td>
-                        <td>10 Mhz</td>
-                        <td>5440/5835 MHz</td>
-                        <td>ABC</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>34224:1</td>
-                        <td>Barrister Nazmul Huda’s Residence</td>
-                        <td>Joypara BTS</td>
-                        <td>10.67.1.202 -- 0/37</td>
-                        <td>10.200.230.58</td>
-                        <td>10.200.230.59</td>
-                        <td>P2P</td>
-                        <td>PMP Cambium Eforce200 With Dish</td>
-                        <td>BNHR EP / link321</td>
-                        <td>05 Mhz</td>
-                        <td>5760 MHz</td>
-                        <td>BNHR EP / link3210</td>
-                        <td>N/A</td>
-                    </tr>
-                    <tr class="searchable-row">
-                        <td>2116:54:00</td>
-                        <td>Agrani Bank Limited:Churain Bazar Branch</td>
-                        <td>Joypara BTS</td>
-                        <td>10.67.1.202 -- 0/30</td>
-                        <td>10.200.230.98</td>
-                        <td>10.200.230.99</td>
-                        <td>P2P</td>
-                        <td>PowerBeam M5 400</td>
-                        <td>ablchurain</td>
-                        <td>8 Mhz</td>
-                        <td>5780/5675 MHz</td>
-                        <td>ablchurain</td>
-                        <td>N/A</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    
+    <div class="detail-footer">MZR · MOTIJHEEL ZONE RADIO · LIVE DATA</div>
 </div>
 
 <script>
-    // Initial code you provided for tab switching
-    function openTab(evt, tabName) {
-        var i, tabContent, tabLinks;
-        tabContent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabContent.length; i++) {
-            tabContent[i].style.display = "none";
-        }
-        tabLinks = document.getElementsByClassName("tab-link");
-        for (i = 0; i < tabLinks.length; i++) {
-            tabLinks[i].className = tabLinks[i].className.replace(" active", "");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
+const btsData = {
+    malek: {
+        name: "Malek BTS",
+        clients: [
+            { name:"IFIC Bank Limited: DC- 3rd Link", swip:"123.200.15.3:26", apip:"10.200.149.114", cpip:"10.200.149.115", linktype:"P2P", radioname:"NANO BEAM-M5-400", ssid:"1092018", chwidth:"20 MHz", freq:"5805/5850", key:"N/A", vlan:"N/A" }
+        ]
+    },
+    jatrabari: {
+        name: "Jatrabari BTS",
+        clients: [
+            { name:"Dept. of Immigration: RPO Jatrabari", swip:"Huawei SW:GE0/0/2", apip:"10.200.140.42", cpip:"10.200.140.43", linktype:"P2P", radioname:"NANO BEAM-M5-400", ssid:"10122017", chwidth:"10 MHz", freq:"5825/5365", key:"N/A", vlan:"N/A" },
+            { name:"Midland Bank Ltd: Aganagar", swip:"Huawei SW:GE0/0/22", apip:"172.16.17.50", cpip:"172.16.17.51", linktype:"P2M", radioname:"NANO BEAM-M5-400", ssid:"midland", chwidth:"25 MHz", freq:"5870/55860", key:"midland123", vlan:"15111" },
+            { name:"Mutual Trust Bank: Keranigonj", swip:"Huawei SW:GE0/0/22", apip:"172.16.17.50", cpip:"172.16.17.53", linktype:"P2M", radioname:"NANO BEAM-M5-300", ssid:"midland", chwidth:"25 MHz", freq:"5870/55860", key:"midland123", vlan:"15100" },
+            { name:"AB Bank Ltd: Jinjira Branch", swip:"Huawei SW:GE0/0/22", apip:"172.16.17.50", cpip:"172.16.17.52", linktype:"P2M", radioname:"NANO BEAM-M5-400", ssid:"midland", chwidth:"25 MHz", freq:"5870/55860", key:"midland123", vlan:"15100" },
+            { name:"Janata Bank: Gandaria Corp Branch", swip:"Huawei SW:GE0/0/11", apip:"172.16.21.130", cpip:"172.16.21.133", linktype:"P2P", radioname:"PMP Eforce100 Dish", ssid:"6092020", chwidth:"20 MHz", freq:"5760", key:"epmp-keranigonj", vlan:"N/A" },
+            { name:"Renata Ltd: Burigonga Depot", swip:"Huawei SW:GE0/0/20", apip:"10.200.140.106", cpip:"10.200.140.107", linktype:"P2M", radioname:"NANO AIRFIBER 5XHD", ssid:"mblabdullahpur", chwidth:"20 MHz", freq:"5730", key:"121224@L3", vlan:"N/A" },
+            { name:"United Com. Bank: Dania Branch", swip:"Huawei SW:GE0/0/21", apip:"10.200.140.98", cpip:"10.200.140.100", linktype:"P2M", radioname:"NANO STATION M5", ssid:"icmh567", chwidth:"20 MHz", freq:"5775/5785", key:"N/A", vlan:"600" },
+            { name:"Dutch-Bangla Bank: Matuail Branch", swip:"Huawei SW:GE0/0/23", apip:"172.16.21.98", cpip:"172.16.21.100", linktype:"P2P", radioname:"ePMP Eforce100 Dish", ssid:"epmpjatrabari", chwidth:"20 MHz", freq:"5350/5840", key:"epmp.jatrabari", vlan:"N/A" }
+	     { name:"B.A.R & ASSOCIATES LTD", swip:"Huawei SW:GE0/0/28", apip:"10.200.140.194", cpip:"10.200.140.195", linktype:"P2P", radioname:"ePMP Cambium Eforce300 With Dish", ssid:"BARassociate26", chwidth:"40 MHz", freq:"5350", key:"BAR@link3", vlan:"N/A" }
+
+        ]
+    },
+    imamganj: {
+        name: "Imamganj BTS",
+        clients: [
+            { name:"Shahjalal Islamic Bank: Keranigonj", swip:"10.66.61.2:12", apip:"172.16.9.146", cpip:"172.16.9.149", linktype:"P2M", radioname:"NANO BEAM-M5-400", ssid:"imam", chwidth:"20 MHz", freq:"5120/5350", key:"N/A", vlan:"1010" },
+            { name:"DBBL: Rajabari Bazar FT", swip:"10.66.61.2:12", apip:"172.16.9.146", cpip:"172.16.9.154", linktype:"P2M", radioname:"NANO BEAM-M5-400", ssid:"imam", chwidth:"20 MHz", freq:"5350/5360", key:"N/A", vlan:"1013" }
+        ]
+    },
+    concord: {
+        name: "Concord BTS",
+        clients: [
+            { name:"Diamond Disposable & Plastic Ind.", swip:"10.67.3.4:33", apip:"10.200.144.218", cpip:"10.200.144.219", linktype:"P2P", radioname:"PMP Eforce100 Dish", ssid:"3112022", chwidth:"20 MHz", freq:"5340/5355", key:"diamond12345", vlan:"N/A" },
+            { name:"PRAN DAIRY LTD: Keranigonj", swip:"10.67.3.3:15", apip:"10.200.155.154", cpip:"10.200.155.155", linktype:"P2P", radioname:"PMP Eforce100 Dish", ssid:"5072022", chwidth:"20 MHz", freq:"5215/5785", key:"pran12345", vlan:"N/A" },
+            { name:"BPDB: Pre-Paid Metering Main Link", swip:"10.67.3.4:41", apip:"10.200.144.154", cpip:"10.200.144.155", linktype:"P2P", radioname:"PMP Eforce100 Dish", ssid:"link321", chwidth:"20 MHz", freq:"5350/5370", key:"tssa012419", vlan:"N/A" },
+            { name:"United Finance: HO Sec Radio", swip:"10.67.3.4:45", apip:"10.200.144.106", cpip:"10.200.144.107", linktype:"P2P", radioname:"ePMP Eforce300", ssid:"UFL_HO_Sec", chwidth:"20 MHz", freq:"5730/5750", key:"UFL@link321", vlan:"N/A" }
+        ]
+    },
+    joypara: {
+        name: "Joypara BTS",
+        clients: [
+            { name:"Agrani Bank: Kolapara Branch", swip:"10.67.1.202:0/4", apip:"10.200.134.74", cpip:"10.200.134.75", linktype:"P2P", radioname:"PowerBeam M5 400", ssid:"ABL", chwidth:"10 MHz", freq:"5500/5800 MHz", key:"ABL", vlan:"N/A" },
+            { name:"Bangladesh Krishi Bank: Hashara", swip:"10.59.1.30:0/11", apip:"10.200.133.146", cpip:"10.200.133.147", linktype:"P2P", radioname:"Rocket 5AC Lite", ssid:"BKB/hasara", chwidth:"10 MHz", freq:"5340/5345 MHz", key:"hasara07", vlan:"N/A" },
+            { name:"Shahjalal Isl. Bank: Nimtola", swip:"10.67.3.4:0/10", apip:"10.200.143.226", cpip:"10.200.143.229", linktype:"P2M", radioname:"PowerBeam M5 400", ssid:"PBLNIM", chwidth:"20 MHz", freq:"5350/5370 MHz", key:"pblnim@321", vlan:"N/A" },
+            { name:"National Bank: Bhaghyakul Branch", swip:"10.67.1.202:0/41", apip:"10.200.226.34", cpip:"10.200.226.35", linktype:"P2P", radioname:"Rocket 5AC Lite", ssid:"21102024", chwidth:"20 MHz", freq:"5330/5350 MHz", key:"21102024", vlan:"N/A" },
+            { name:"National Bank: Baghrabazar Branch", swip:"10.67.1.202:0/21", apip:"10.200.133.226", cpip:"10.200.133.227", linktype:"P2P", radioname:"PowerBeam M5 400", ssid:"ABC", chwidth:"10 MHz", freq:"5440/5835 MHz", key:"ABC", vlan:"N/A" },
+            { name:"Barrister Nazmul Huda's Residence", swip:"10.67.1.202:0/37", apip:"10.200.230.58", cpip:"10.200.230.59", linktype:"P2P", radioname:"PMP Eforce200 Dish", ssid:"BNHR EP", chwidth:"05 MHz", freq:"5760 MHz", key:"link3210", vlan:"N/A" },
+            { name:"Agrani Bank: Churain Bazar Branch", swip:"10.67.1.202:0/30", apip:"10.200.230.98", cpip:"10.200.230.99", linktype:"P2P", radioname:"PowerBeam M5 400", ssid:"ablchurain", chwidth:"8 MHz", freq:"5780/5675 MHz", key:"ablchurain", vlan:"N/A" }
+        ]
+    }
+};
+
+let currentBTS = 'malek';
+let globalSearchActive = false; // when search query spans all BTS
+
+function selectBTS(btn, id) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    btn.classList.add('active');
+    currentBTS = id;
+    document.getElementById('clientSearch').value = '';
+    globalSearchActive = false;
+    renderClientPanel(id);
+    showWelcome();
+}
+
+function renderClientPanel(id) {
+    const bts = btsData[id];
+    document.getElementById('panel-bts-name').textContent = bts.name.toUpperCase();
+    document.getElementById('panel-count').textContent = bts.clients.length + ' CLIENT' + (bts.clients.length !== 1 ? 'S' : '');
+    renderCards(bts.clients, id); // pass origin id to keep context
+}
+
+function renderCards(clientsArray, originBtsId = currentBTS) {
+    const list = document.getElementById('clientList');
+    if (!clientsArray.length) {
+        list.innerHTML = `<div class="client-empty"><div class="client-empty-icon">🔍</div><div class="client-empty-text">No clients found</div></div>`;
+        return;
+    }
+    list.innerHTML = clientsArray.map((c, i) => {
+        // store original bts id in data attribute for callback
+        return `<div class="client-card" data-bts="${originBtsId}" data-index="${i}" onclick="selectClientGlobal(this, '${originBtsId}', ${i})">
+            <div class="client-name">${c.name}</div>
+            <div class="client-meta">
+                <span class="client-tag ${c.linktype.toLowerCase()}">${c.linktype}</span>
+                <span class="client-ip">${c.apip}</span>
+            </div>
+            <span class="client-arrow">›</span>
+        </div>`;
+    }).join('');
+}
+
+// GLOBAL SEARCH — across all BTS
+function globalSearchClients() {
+    const q = document.getElementById('clientSearch').value.toLowerCase().trim();
+    if (q === '') {
+        globalSearchActive = false;
+        renderClientPanel(currentBTS);
+        return;
     }
 
-    // Updated search functionality
-    function searchTable() {
-        var input, filter, tabContents, i, k, tr, td, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        
-        tabContents = document.getElementsByClassName("tab-content");
-        
-        // Loop through all tab contents
-        for (k = 0; k < tabContents.length; k++) {
-            var currentTabContent = tabContents[k];
-            var foundMatchInTab = false; // To check if any result is found in this tab
-            tr = currentTabContent.getElementsByClassName("searchable-row");
-            
-            // Loop through all table rows in the current tab
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1]; // Get the 'Client Name' column (index 1)
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = ""; // Show the row
-                        foundMatchInTab = true;
-                    } else {
-                        tr[i].style.display = "none"; // Hide rows that don't match
-                    }
-                }
+    globalSearchActive = true;
+    // gather all clients from all BTS with bts origin
+    let allMatches = [];
+    for (let [btsId, bts] of Object.entries(btsData)) {
+        bts.clients.forEach(client => {
+            if (client.name.toLowerCase().includes(q)) {
+                allMatches.push({ client, btsId, btsName: bts.name });
             }
-
-            // After searching the entire tab, if a match was found, activate it
-            if (foundMatchInTab && filter.length > 0) {
-                // First, deactivate all tabs
-                for (var j = 0; j < tabContents.length; j++) {
-                    tabContents[j].classList.remove("active");
-                }
-                document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
-
-                // Then, activate the tab where a match was found
-                currentTabContent.classList.add("active");
-                document.querySelector(`.tab-link[onclick*='${currentTabContent.id}']`).classList.add('active');
-
-            } else if (filter.length === 0) {
-                // If search is empty, show all rows and default to the first tab
-                for (i = 0; i < tr.length; i++) {
-                    tr[i].style.display = "";
-                }
-                // Also, ensure the correct tab is active (defaulting to the first one)
-                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-link').forEach(b => b.classList.remove('active'));
-                document.getElementById('malek-bts').classList.add('active');
-                document.querySelector(`.tab-link[onclick*='malek-bts']`).classList.add('active');
-            }
-        }
+        });
     }
+
+    // update header to reflect global search
+    document.getElementById('panel-bts-name').textContent = 'ALL BTS · GLOBAL';
+    document.getElementById('panel-count').textContent = allMatches.length + ' RESULT' + (allMatches.length !== 1 ? 'S' : '');
+
+    // render cards with mixed origins (store btsId in data attr)
+    const list = document.getElementById('clientList');
+    if (!allMatches.length) {
+        list.innerHTML = `<div class="client-empty"><div class="client-empty-icon">🔍</div><div class="client-empty-text">No matches across BTS</div></div>`;
+        return;
+    }
+
+    list.innerHTML = allMatches.map((match, idx) => {
+        return `<div class="client-card" data-bts="${match.btsId}" data-global-idx="${idx}" onclick="selectClientGlobal(this, '${match.btsId}', ${match.btsId === 'malek' ? btsData.malek.clients.indexOf(match.client) : (match.btsId === 'jatrabari' ? btsData.jatrabari.clients.indexOf(match.client) : (match.btsId === 'imamganj' ? btsData.imamganj.clients.indexOf(match.client) : (match.btsId === 'concord' ? btsData.concord.clients.indexOf(match.client) : btsData.joypara.clients.indexOf(match.client))))})">
+            <div class="client-name">${match.client.name}</div>
+            <div class="client-meta">
+                <span class="client-tag ${match.client.linktype.toLowerCase()}">${match.client.linktype}</span>
+                <span class="client-ip">${match.client.apip}</span>
+                <span style="margin-left:auto; font-size:8px; color:var(--accent); background:rgba(26,127,203,0.08); padding:2px 6px; border-radius:12px;">${match.btsName}</span>
+            </div>
+            <span class="client-arrow">›</span>
+        </div>`;
+    }).join('');
+}
+
+function selectClientGlobal(element, btsId, clientIdx) {
+    document.querySelectorAll('.client-card').forEach(c => c.classList.remove('active'));
+    element.classList.add('active');
+
+    const client = btsData[btsId].clients[clientIdx];
+    showDetail(client, btsData[btsId].name);
+}
+
+function filterClients() { /* replaced by globalSearchClients, but keep for fallback */ globalSearchClients(); }
+
+function selectClient(card, idx) {
+    if (globalSearchActive) return; // selection handled by global handler
+    document.querySelectorAll('.client-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    const q = document.getElementById('clientSearch').value.toLowerCase();
+    const list = btsData[currentBTS].clients.filter(c => c.name.toLowerCase().includes(q));
+    showDetail(list[idx], btsData[currentBTS].name);
+}
+
+function showWelcome() {
+    document.getElementById('detailBody').innerHTML = `
+        <div class="detail-welcome">
+            <div class="detail-welcome-icon">📡</div>
+            <div class="detail-welcome-title">Select a Client</div>
+        </div>`;
+}
+
+function v(val, isIp) {
+    if (!val || val === 'N/A') return `<span class="na-val">N/A</span>`;
+    return isIp ? `<span class="ip-val">${val}</span>` : val;
+}
+
+function showDetail(c, btsName) {
+    const lt = c.linktype.toLowerCase();
+    const vlan = (c.vlan && c.vlan !== 'N/A') ? `<span class="vlan-chip">${c.vlan}</span>` : `<span class="na-val">N/A</span>`;
+
+    document.getElementById('detailBody').innerHTML = `
+        <div class="detail-card">
+            <div class="dc-header">
+                <div>
+                    <div class="dc-client-name">${c.name}</div>
+                    <div class="dc-bts-label">${btsName}</div>
+                </div>
+                <span class="dc-link-badge ${lt}">${c.linktype}</span>
+            </div>
+            <div class="dc-table">
+                <div class="dc-cell lbl-wide">SW IP &amp; Port</div>
+                <div class="dc-cell val-wide">${v(c.swip, true)}</div>
+
+                <div class="dc-cell lbl">Radio IP (AP)</div>
+                <div class="dc-cell val">${v(c.apip, true)}</div>
+                <div class="dc-cell lbl">Radio IP (CP)</div>
+                <div class="dc-cell val">${v(c.cpip, true)}</div>
+
+                <div class="dc-cell lbl">Radio Name</div>
+                <div class="dc-cell val">${v(c.radioname)}</div>
+                <div class="dc-cell lbl">SSID</div>
+                <div class="dc-cell val">${v(c.ssid)}</div>
+
+                <div class="dc-cell lbl">Channel Width</div>
+                <div class="dc-cell val">${v(c.chwidth)}</div>
+                <div class="dc-cell lbl">Frequency</div>
+                <div class="dc-cell val">${v(c.freq)}</div>
+
+                <div class="dc-cell lbl">Key</div>
+                <div class="dc-cell val">${v(c.key)}</div>
+                <div class="dc-cell lbl">VLAN</div>
+                <div class="dc-cell val">${vlan}</div>
+            </div>
+        </div>`;
+}
+
+// initial render
+renderClientPanel('malek');
 </script>
-
 </body>
-
 </html>
